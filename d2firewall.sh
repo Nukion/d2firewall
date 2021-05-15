@@ -1,9 +1,13 @@
 #!/bin/bash
 
+#credits to @BasRaayman and @inchenzo
+
+
+
 
 INTERFACE="tun0"
 
-DEFAULT_NET="192.168.8.0/24"
+DEFAULT_NET="10.8.0.0/24"
 
 RED='\033[0;31m'
 
@@ -62,9 +66,9 @@ reset_ip_tables () {
 
   if ip a | grep -q "tun0"; then
 
-    if ! sudo iptables-save | grep -q "POSTROUTING -s 192.168.8.0/24"; then
+    if ! sudo iptables-save | grep -q "POSTROUTING -s 10.8.0.0/24"; then
 
-      sudo iptables -t nat -A POSTROUTING -s 192.168.8.0/24 -o eth0 -j MASQUERADE
+      sudo iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
 
     fi
 
@@ -72,7 +76,7 @@ reset_ip_tables () {
 
     sudo iptables -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
 
-    sudo iptables -A FORWARD -s 192.168.8.0/24 -j ACCEPT
+    sudo iptables -A FORWARD -s 10.8.0.0/24 -j ACCEPT
 
   fi
 
@@ -621,7 +625,7 @@ elif [ "$action" == "update" ]; then
 
   rm ./d2firewall.sh
 
-  wget -q https://raw.githubusercontent.com/nukion/d2firewall/d2firewall.sh -O ./d2firewall.sh
+  wget -q https://raw.githubusercontent.com/cloudex99/Destiny-2-Matchmaking-Firewall/main/d2firewall.sh -O ./d2firewall.sh
 
   chmod +x ./d2firewall.sh
 
